@@ -73,16 +73,9 @@ function Validator(props) {
 
   this._isOptional = false
   this.isOptional = () => {
-    // TODO: Clean this up
-    if (this._isOptional) {
-      if (_.isString(this.val()) && this.val().trim().length === 0) {
-        //this.set(null);
-        return this._isOptional
-      } else if (!_.isUndefined(this.val())) {
-        this._isOptional = false
-      }
+    if (this._isOptional && !_.isUndefined(this.val())) {
+      this._isOptional = false;
     }
-
     return this._isOptional
   }
 
@@ -173,15 +166,10 @@ Validator.prototype.required = function(tip) {
 }
 
 Validator.prototype.optional = function() {
-  // TODO: Clean this up
-  if (_.isString(this.val()) && this.val().trim().length === 0) {
-    delete this.vals[this.key]
-    this._isOptional = true
-  } else if (_.isUndefined(this.val())) {
-    this._isOptional = true
+  if (_.isUndefined(this.val())) {
+    this._isOptional = true;
   }
-
-  return this
+  return this;
 }
 
 Validator.addMethod('isIn', function(arr, tip) {
